@@ -442,6 +442,148 @@ namespace ParserXml
                     Console.WriteLine();
                 }
             }
+            using (StreamWriter sw = new StreamWriter("C:\\Users\\Shispon\\ParserDirectory\\ParserXml\\output.txt"))
+            {
+                foreach (var standart in standards)
+                {
+                    sw.WriteLine("ProfessionalStandart:");
+                    sw.WriteLine($"  Name: {standart.NameProfessionalStandart}");
+                    sw.WriteLine($"  Registration Number: {standart.RegistrationNumber}");
+                    sw.WriteLine($"  Order Number: {standart.OrderNumber}");
+                    sw.WriteLine($"  Date of Approval: {standart.DateOfApproval}");
+                    sw.WriteLine("  First Section:");
+                    sw.WriteLine($"    Kind Professional Activity: {standart.FirstSection?.KindProfessionalActivity}");
+                    sw.WriteLine($"    Code Kind Professional Activity: {standart.FirstSection?.CodeKindProfessionalActivity}");
+                    sw.WriteLine($"    Purpose Kind Professional Activity: {standart.FirstSection?.PurposeKindProfessionalActivity}");
+
+                    if (standart.FirstSection?.EmploymentGroup != null)
+                    {
+                        sw.WriteLine("    Employment Group:");
+                        if (standart.FirstSection.EmploymentGroup.ListOKZ != null)
+                        {
+                            sw.WriteLine("      List OKZ:");
+                            foreach (var unitOKZ in standart.FirstSection.EmploymentGroup.ListOKZ)
+                            {
+                                sw.WriteLine($"        Code: {unitOKZ.CodeOKZ}, Name: {unitOKZ.NameOKZ}");
+                            }
+                        }
+                        if (standart.FirstSection.EmploymentGroup.ListOKVED != null)
+                        {
+                            sw.WriteLine("      List OKVED:");
+                            foreach (var unitOKVED in standart.FirstSection.EmploymentGroup.ListOKVED)
+                            {
+                                sw.WriteLine($"        Code: {unitOKVED.CodeOKVED}, Name: {unitOKVED.NameOKVED}");
+                            }
+                        }
+                    }
+
+                    sw.WriteLine("  Third Section:");
+                    if (standart.ThirdSection?.WorkFunction?.GeneralizedWorkFunctions != null)
+                    {
+                        foreach (var genWorkFunction in standart.ThirdSection.WorkFunction.GeneralizedWorkFunctions.generalizedWorkFunctions)
+                        {
+                            sw.WriteLine("    Generalized Work Function:");
+                            sw.WriteLine($"      Code OTF: {string.Join(", ", genWorkFunction.CodeOTF)}");
+                            sw.WriteLine($"      Name OTF: {string.Join(", ", genWorkFunction.NameOTF)}");
+                            sw.WriteLine("      Possible Job Titles:");
+                            foreach (var title in genWorkFunction.PossibleJobTitles.PossibleJobTitle)
+                            {
+                                sw.WriteLine($"        {title}");
+                            }
+                            sw.WriteLine("      Educational Requirements:");
+                            foreach (var requirement in genWorkFunction.EducationalRequirements.EducationalRequirement)
+                            {
+                                sw.WriteLine($"        {requirement}");
+                            }
+                            sw.WriteLine("      Requirements Work Experiences:");
+                            foreach (var experience in genWorkFunction.RequirementsWorkExperiences.RequirementsWorkExperience)
+                            {
+                                sw.WriteLine($"        {experience}");
+                            }
+                            sw.WriteLine("      Special Conditions For Admission To Works:");
+                            foreach (var condition in genWorkFunction.SpecialConditionsForAdmissionToWorks.SpecialConditionForAdmissionToWork)
+                            {
+                                sw.WriteLine($"        {condition}");
+                            }
+                            sw.WriteLine("      Other Characteristics:");
+                            foreach (var characteristic in genWorkFunction.OtherCharacteristics.OtherCharacteristic)
+                            {
+                                sw.WriteLine($"        {characteristic}");
+                            }
+                            sw.WriteLine("      Other Characteristic Plus:");
+                            if (genWorkFunction.OtherCharacteristicPlus.ListOKZ != null)
+                            {
+                                sw.WriteLine("        List OKZ:");
+                                foreach (var unitOKZ in genWorkFunction.OtherCharacteristicPlus.ListOKZ)
+                                {
+                                    sw.WriteLine($"          Code: {unitOKZ.CodeOKZ}, Name: {unitOKZ.NameOKZ}");
+                                }
+                            }
+                            if (genWorkFunction.OtherCharacteristicPlus.ListEKS != null)
+                            {
+                                sw.WriteLine("        List EKS:");
+                                foreach (var unitEKS in genWorkFunction.OtherCharacteristicPlus.ListEKS)
+                                {
+                                    sw.WriteLine($"          Code: {unitEKS.CodeEKS}, Name: {unitEKS.NameEKS}");
+                                }
+                            }
+                            if (genWorkFunction.OtherCharacteristicPlus.ListOKPDTR != null)
+                            {
+                                sw.WriteLine("        List OKPDTR:");
+                                foreach (var unitOKPDTR in genWorkFunction.OtherCharacteristicPlus.ListOKPDTR)
+                                {
+                                    sw.WriteLine($"          Code: {unitOKPDTR.CodeOKPDTR}, Name: {unitOKPDTR.NameOKPDTR}");
+                                }
+                            }
+                            if (genWorkFunction.OtherCharacteristicPlus.ListOKSO != null)
+                            {
+                                sw.WriteLine("        List OKSO:");
+                                foreach (var unitOKSO in genWorkFunction.OtherCharacteristicPlus.ListOKSO)
+                                {
+                                    sw.WriteLine($"          Code: {unitOKSO.CodeOKSO}, Name: {unitOKSO.NameOKSO}");
+                                }
+                            }
+                            sw.WriteLine("      Particular Work Functions:");
+                            foreach (var particularWorkFunctions in genWorkFunction.ParticularWorkFunctions)
+                            {
+                                foreach (var partWorkFunction in particularWorkFunctions.particularWorkFunction)
+                                {
+                                    sw.WriteLine("        Particular Work Function:");
+                                    sw.WriteLine($"          Code TF: {string.Join(", ", partWorkFunction.codeTF)}");
+                                    sw.WriteLine($"          Name TF: {string.Join(", ", partWorkFunction.nameTF)}");
+                                    sw.WriteLine($"          Sub Qualification: {string.Join(", ", partWorkFunction.subQualification)}");
+                                    sw.WriteLine("          Labor Actions:");
+                                    foreach (var action in partWorkFunction.laborActions.laborActions)
+                                    {
+                                        sw.WriteLine($"            {action}");
+                                    }
+                                    sw.WriteLine("          Required Skills:");
+                                    foreach (var skill in partWorkFunction.requiredSkills.RequiredSkill)
+                                    {
+                                        sw.WriteLine($"            {skill}");
+                                    }
+                                    sw.WriteLine("          Necessary Knowledges:");
+                                    foreach (var knowledge in partWorkFunction.necessaryKnowledges.NecessaryKnowledge)
+                                    {
+                                        sw.WriteLine($"            {knowledge}");
+                                    }
+                                    sw.WriteLine("          Other Characteristics:");
+                                    foreach (var characteristic in partWorkFunction.otherCharacteristics.OtherCharacteristic)
+                                    {
+                                        sw.WriteLine($"            {characteristic}");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    sw.WriteLine();
+                }
+            }
+
+            Console.WriteLine("Data has been written to output.txt");
         }
     }
 }
+
+    
+
